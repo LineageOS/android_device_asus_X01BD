@@ -60,11 +60,10 @@ setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" false "$CLEAN_VENDOR"
 extract "$MY_DIR"/proprietary-files.txt "$SRC" "$SECTION"
 
 BLOB_ROOT="$LINEAGE_ROOT"/vendor/"$VENDOR"/"$DEVICE"/proprietary
+IMSCMSERVICE_DIR="$BLOB_ROOT"/vendor/etc/permissions
+IMSCMSERVICE_NAME="com.qualcomm.qti.imscmservice*.xml"
 
-IMSCMSERVICE="$BLOB_ROOT"/vendor/etc/permissions/com.qualcomm.qti.imscmservice.xml	
-IMSCMSERVICE_1_1="$BLOB_ROOT"/vendor/etc/permissions/com.qualcomm.qti.imscmservice_1_1.xml	
-
-sed -i "s|/system/framework/|/vendor/framework/|g" "$IMSCMSERVICE"	
-sed -i "s|/system/framework/|/vendor/framework/|g" "$IMSCMSERVICE_1_1
+find "$IMSCMSERVICE_DIR" -name "$IMSCMSERVICE_NAME" -exec \
+sed -i "s|/system/framework/|/vendor/framework/|g" "{}" \;
 
 . "$MY_DIR"/setup-makefiles.sh
